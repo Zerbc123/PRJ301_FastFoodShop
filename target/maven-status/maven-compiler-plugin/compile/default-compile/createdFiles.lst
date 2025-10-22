@@ -1,0 +1,11 @@
+controller\LoginServlet.class
+model\Product.class
+com\mycompany\project_foodshop_2\JakartaRestConfiguration.class
+controller\LogoutServlet.class
+dao\UserDAO.class
+db\DBContext.class
+controller\FoodShopServlet.class
+dao\ProductDAO.class
+com\mycompany\project_foodshop_2\resources\JakartaEE11Resource.class
+controller\SignUpServlet.class
+model\User.class
