@@ -57,17 +57,18 @@ public class UserDAO extends DBContext {
     }
 
     public int signup(String full_name, String email, String password, String phone_number, String address) {
-        String sql = "INSERT INTO [User] (full_name, email, password, phone_number, address, role_id, created_at) VALUES (?, ?, ?, ?, ?, ?, GETDATE())";
+        String sql = "INSERT INTO [User] (full_name, email, [password], phone_number, [address], role_id) "
+                + "VALUES (?, ?, ?, ?, ?, ?)";
         try {
             PreparedStatement st = this.getConnection().prepareStatement(sql);
             st.setString(1, full_name);
             st.setString(2, email);
-            st.setString(3, this.hashMd5(password)); // 🔒 Hash mật khẩu bằng MD5
+            st.setString(3, this.hashMd5(password)); // Mã hóa mật khẩu
             st.setString(4, phone_number);
             st.setString(5, address);
-            st.setInt(6, 3); // 3 = role customer (user)
+            st.setInt(6, 2); // 2 = user thường (role_id 2)
 
-            return st.executeUpdate(); // trả về 1 nếu thêm thành công
+            return st.executeUpdate(); // trả về 1 nếu thành công
         } catch (SQLException ex) {
             System.getLogger(UserDAO.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
@@ -75,12 +76,14 @@ public class UserDAO extends DBContext {
     }
 
     public boolean exists(String email) {
-        String query = "SELECT * FROM [User] WHERE email = ?";
+        String sql = "SELECT COUNT(*) FROM [User] WHERE email = ?";
         try {
-            PreparedStatement st = this.getConnection().prepareStatement(query);
+            PreparedStatement st = this.getConnection().prepareStatement(sql);
             st.setString(1, email);
             ResultSet rs = st.executeQuery();
-            return rs.next();
+            if (rs.next()) {
+                return rs.getInt(1) > 0;
+            }
         } catch (SQLException ex) {
             System.getLogger(UserDAO.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }

@@ -81,6 +81,7 @@ public class SignUpServlet extends HttpServlet {
 
         UserDAO dao = new UserDAO();
 
+        // Kiểm tra trùng email
         if (dao.exists(email)) {
             request.setAttribute("error", "Email already exists!");
             request.getRequestDispatcher("/WEB-INF/user/signup.jsp").forward(request, response);
