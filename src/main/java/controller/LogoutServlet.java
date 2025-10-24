@@ -78,7 +78,7 @@ public class LogoutServlet extends HttpServlet {
 //        }
 
         // Quay lại trang đăng nhập
-        response.sendRedirect(request.getContextPath() + "/login");
+        response.sendRedirect(request.getContextPath() + "/food-shop");
     }
 
 /**

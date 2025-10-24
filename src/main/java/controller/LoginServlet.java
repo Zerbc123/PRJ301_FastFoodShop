@@ -85,26 +85,32 @@ public class LoginServlet extends HttpServlet {
             HttpSession session = request.getSession();
             session.setAttribute("loggedInUser", loggedInUser);
             session.setAttribute("role", loggedInUser.getRole_id());
+            //Điều hướng sang trang của admin 
+            if (loggedInUser.getRole_id() == 1) {
+               response.sendRedirect(request.getContextPath() + "/dashboard"); // Admin
+            } else {
+                response.sendRedirect(getServletContext().getContextPath() + "/food-shop"); // Customer
+            }
 
 //            if(remember != null){
 //                Cookie cUser = new Cookie("username", username);
 //                cUser.setMaxAge(7*24*60*60);
 //                response.addCookie(cUser);
 //            }
-            response.sendRedirect(getServletContext().getContextPath() + "/food-shop");
+            
         } else {
             request.setAttribute("error", "Invalid username or password!");
             response.sendRedirect(getServletContext().getContextPath() + "/login");
         }
-}
+    }
 
-/**
- * Returns a short description of the servlet.
- *
- * @return a String containing servlet description
- */
-@Override
-public String getServletInfo() {
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
+    @Override
+    public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
 

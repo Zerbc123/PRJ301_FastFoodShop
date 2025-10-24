@@ -1,3 +1,4 @@
+controller_admin\DashBoardServlet.class
 model\CartItem.class
 controller\LoginServlet.class
 controller\CheckoutServlet.class
